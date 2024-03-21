@@ -6,6 +6,7 @@ const deposit=document.querySelector('#deposit');
 const carDelivery=document.querySelector('#car-delivery');
 const submit=document.querySelector('#calculate');
 const form=document.querySelector('form');
+let price=document.createElement('input');
 let honda=['Select car','BR-V','Accord','City','Civic','HR-V'];
 let indus=['Select car','Corolla Altis','Corolla Altis Grande','Fortuner V','Hilux Revo','Yaris 1.3 GLI']
 let kia=['Select car','Carnival GLS','Picanto AT','Sorento','Sportage','Stonic'];
@@ -26,6 +27,10 @@ function calculate(){
     while (form.lastElementChild) {
       form.removeChild(form.lastElementChild);
     }
+    if(carType.value=='Old car'){
+      let model="Model "+carSelector.value;
+      calculateLoan(carType.value,vendorSelector.value,model,price.value,tenure.value,deposit.value,carDelivery.value);
+    }else
     calculateLoan(carType.value,vendorSelector.value,carSelector.value,Math.round((Math.random()*(15000000-2000000)+2000000)/10000)*10000,tenure.value,deposit.value,carDelivery.value);
 }
 
@@ -42,7 +47,7 @@ carType.addEventListener('change',()=>{
             opt.innerHTML = model[i];
             carSelector.appendChild(opt);
         }
-        let price=document.createElement('input');
+       
         price.required=true;
         let parent=tenure.parentNode;
         price.id='price';
@@ -51,15 +56,19 @@ carType.addEventListener('change',()=>{
         price.min='0';
         price.type='number';
         parent.replaceChild(price,tenure);
+        parent.replaceChild(tenure,carDelivery);
 
     }
     else if(carType.value=='New car'){
+    
         removeOptions(carSelector);
         var opt = document.createElement('option');
         opt.value = '';
         opt.innerHTML = 'Select car';
         carSelector.appendChild(opt);
+        changeCar(vendorSelector.value);
         let parent=price.parentNode;
+        parent.replaceChild(carDelivery,tenure);
         parent.replaceChild(tenure,price);
     }
 })
@@ -107,7 +116,7 @@ function calculateLoan(carType,vendor,car,carPrice,tenure,deposit,delivery){
 
     const rent=document.createElement('p');
     rent.classList.add('sub');
-    rent.innerHTML='Rent per month :       '+Math.round(Math.round(2500+parseInt(carPrice)*parseInt(deposit)/100)/(parseInt(tenure)*12));
+    rent.innerHTML='Rent per month :       '+Math.round(Math.round(carPrice-Math.round(2500+parseInt(carPrice)*parseInt(deposit)/100))/(parseInt(tenure)*12));
 
     const button=document.createElement('button');
     button.classList.add('button');
