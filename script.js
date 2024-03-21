@@ -34,7 +34,7 @@ function calculate(){
     }
     if(carType.value=='Old car'){
       let model="Model "+carSelector.value;
-      calculateLoan(carType.value,vendorSelector.value,model,price.value,tenure.value,deposit.value,carDelivery.value);
+      calculateLoan(carType.value,vendorSelector.value,model,price.value.replace(/,/g, ''),tenure.value,deposit.value,carDelivery.value);
     }else
     calculateLoan(carType.value,vendorSelector.value,carSelector.value,Math.round((Math.random()*(15000000-2000000)+2000000)/10000)*10000,tenure.value,deposit.value,carDelivery.value);
 }
@@ -93,7 +93,7 @@ function calculateLoan(carType,vendor,car,carPrice,tenure,deposit,delivery){
 
     const price=document.createElement('p');
     price.classList.add('sub');
-    price.innerHTML='<b class=price>Price of vehicle :</b> '+carPrice.toLocaleString();
+    price.innerHTML='<b class=price>Price of vehicle :</b> '+parseInt(carPrice).toLocaleString();
 
     const upfront=document.createElement('h2');
     upfront.classList.add('head');
@@ -101,7 +101,7 @@ function calculateLoan(carType,vendor,car,carPrice,tenure,deposit,delivery){
 
     const security=document.createElement('p');
     security.classList.add('sub');
-    security.innerHTML='Security Deposit :   '+Math.round(parseInt(carPrice.replace(/,/g, ''))*parseInt(deposit)/100).toLocaleString()+" ("+deposit+')';
+    security.innerHTML='Security Deposit :   '+Math.round(parseInt(carPrice)*parseInt(deposit)/100).toLocaleString()+" ("+deposit+')';
 
     const fee=document.createElement('p');
     fee.classList.add('sub');
@@ -109,7 +109,7 @@ function calculateLoan(carType,vendor,car,carPrice,tenure,deposit,delivery){
 
     const total=document.createElement('p');
     total.classList.add('sub');
-    total.innerHTML='Total Upfront :     '+Math.round(2500+parseInt(carPrice.replace(/,/g, ''))*parseInt(deposit)/100).toLocaleString();
+    total.innerHTML='Total Upfront :     '+Math.round(2500+parseInt(carPrice)*parseInt(deposit)/100).toLocaleString();
 
 
     const monthly=document.createElement('h2');
@@ -122,8 +122,8 @@ function calculateLoan(carType,vendor,car,carPrice,tenure,deposit,delivery){
 
     const rent=document.createElement('p');
     rent.classList.add('sub');
-    console.log(parseInt(carPrice.replace(/,/g, '')));
-    rent.innerHTML='Rent per month :       '+Math.round(Math.round(carPrice.replace(/,/g, '')-Math.round(2500+parseInt(carPrice.replace(/,/g, ''))*parseInt(deposit)/100))/(parseInt(tenure)*12)).toLocaleString();
+   
+    rent.innerHTML='Rent per month :       '+Math.round(Math.round(carPrice-Math.round(2500+parseInt(carPrice)*parseInt(deposit)/100))/(parseInt(tenure)*12)).toLocaleString();
 
     const button=document.createElement('button');
     button.classList.add('button');
