@@ -58,6 +58,8 @@ carType.addEventListener('change',()=>{
         price.id='price';
         price.placeholder='Car price'
         price.maxLength=12;
+        price.mixLength=7;
+        price.step=1000;
         price.min='0';
         price.type='text';     
         parent.replaceChild(price,tenure);
