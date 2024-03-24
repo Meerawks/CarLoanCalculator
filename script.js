@@ -105,7 +105,7 @@ function calculateLoan(carType,vendor,car,carPrice,tenure,deposit,delivery){
 
     const fee=document.createElement('p');
     fee.classList.add('sub');
-    fee.innerHTML='processing fee :      '+'Rs. 2,500';
+    fee.innerHTML='Processing Fee :      '+'Rs. 2,500';
 
     const total=document.createElement('p');
     total.classList.add('sub');
